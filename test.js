@@ -1,24 +1,21 @@
-import { helloWorld, add } from './hello.js';
+// test.js
+const assert = require('assert');
+const sum = require('./sum');
 
-// Простейшие тесты
-console.log("🧪 Running elementary tests...");
-
-// Тест 1: helloWorld
-const result1 = helloWorld();
-if (result1 === "Hello, World!") {
-  console.log("✅ helloWorld test PASSED");
-} else {
-  console.log("❌ helloWorld test FAILED");
-  process.exit(1);
+// Простой тест
+try {
+  assert.strictEqual(sum(2, 3), 5);
+  console.log('✅ Тест пройден: 2 + 3 = 5');
+} catch (err) {
+  console.error('❌ Тест провален:', err.message);
+  process.exit(1); // Код выхода != 0 → ошибка
 }
 
-// Тест 2: add function
-const result2 = add(2, 3);
-if (result2 === 5) {
-  console.log("✅ add test PASSED");
-} else {
-  console.log("❌ add test FAILED");
+// Можно добавить больше тестов
+try {
+  assert.strictEqual(sum(-1, 1), 0);
+  console.log('✅ Тест пройден: -1 + 1 = 0');
+} catch (err) {
+  console.error('❌ Тест провален:', err.message);
   process.exit(1);
 }
-
-console.log("🎉 All tests passed! GitHub Actions should work!");

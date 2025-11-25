@@ -1,35 +1,24 @@
-name: CI Tests
+# .github/workflows/test.yml
+name: Run Tests
 
 on:
-  push:
-    branches: [ main, develop ]
   pull_request:
     branches: [ main ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    name: Run Elementary Tests
-    
+
     steps:
-    - name: 📥 Checkout code
-      uses: actions/checkout@v4
-      
-    - name: ⎔ Setup Node.js
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
-        cache: 'npm'
-        
-    - name: 📦 Install dependencies
-      run: npm install
-      
-    - name: 🧪 Run tests
+        node-version: '20'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run tests
       run: npm test
-      
-    - name: ✅ Code quality check
-      run: |
-        echo "🔍 Checking code structure..."
-        [ -f "test.js" ] && echo "✅ test.js exists" || exit 1
-        [ -f "package.json" ] && echo "✅ package.json exists" || exit 1
-        echo "📊 All files are present"

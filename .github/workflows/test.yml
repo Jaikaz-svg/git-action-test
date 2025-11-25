@@ -1,10 +1,15 @@
-name: Elementary Tests
+name: CI Tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    name: Run Elementary Tests
     
     steps:
     - name: 📥 Checkout code
@@ -14,15 +19,17 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '18'
+        cache: 'npm'
         
     - name: 📦 Install dependencies
-      run: |
-        echo "No dependencies needed for this simple test"
-        
+      run: npm install
+      
     - name: 🧪 Run tests
       run: npm test
       
-    - name: ✅ Tests completed
+    - name: ✅ Code quality check
       run: |
-        echo "GitHub Actions is working correctly!"
-        echo "All elementary tests passed successfully!"
+        echo "🔍 Checking code structure..."
+        [ -f "test.js" ] && echo "✅ test.js exists" || exit 1
+        [ -f "package.json" ] && echo "✅ package.json exists" || exit 1
+        echo "📊 All files are present"

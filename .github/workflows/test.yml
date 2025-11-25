@@ -1,0 +1,28 @@
+name: Elementary Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: ⎔ Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: 📦 Install dependencies
+      run: |
+        echo "No dependencies needed for this simple test"
+        
+    - name: 🧪 Run tests
+      run: npm test
+      
+    - name: ✅ Tests completed
+      run: |
+        echo "GitHub Actions is working correctly!"
+        echo "All elementary tests passed successfully!"
